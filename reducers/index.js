@@ -51,25 +51,22 @@ function entries(state = {}, action) {
 
     case NEW_CARD:
       let newCard = action.card
+      let res =state.data[action.deckId].value.questions.push(newCard)
       return {
         ...state,
-        data[action.deckId].value.questions:{
-          ...questions,
-          newCard
+        data:{
+          ...state.data,
+          [action.deckId]:{
+              ...state.data[action.deckId],
+              value:{
+                ...state.data[action.deckId].value,
+                questions:[
+                  ...state.data[action.deckId].value.questions,
+                  action.card
+                ]
+              }
+          }
         }
-        // data: {
-        //   ...state.data,
-        //   [action.deckId]: {
-        //     ...state.data[action.deckId],
-        //     value: {
-        //       ...state.data[action.deckId].value,
-        //       questions: {
-        //         ...value.questions,
-        //         newCard
-        //       }
-        //     }
-        //   }
-        // }
       }
     default:
       return state

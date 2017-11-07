@@ -16,7 +16,7 @@ function SubmitBtn({ onPress }) {
 
 class AddCart extends Component {
     submit = () => {
-        const { add, goBack } = this.props
+        const { add } = this.props
         
             const deckList = this.state
 
@@ -28,7 +28,8 @@ class AddCart extends Component {
             }
 
             this.props.dispatch(NewCard(obj,this.props.deckId))
-
+            
+            this.props.navigation.goBack()
     }
     state = { question: 'Question', answer:'Answer',obj:{}};
     render() {
