@@ -51,7 +51,7 @@ function entries(state = {}, action) {
 
     case NEW_CARD:
       let newCard = action.card
-      let res =state.data[action.deckId].value.questions.push(newCard)
+      // let res =state.data[action.deckId].value.questions.push(newCard)
       return {
         ...state,
         data:{
