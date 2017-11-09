@@ -17,15 +17,13 @@ class DeckView extends Component {
   //   return nextProps.card != this.props.card;
   // }
 
-  state = { _card: null }
+  
   render() {
     const { card, deckId } = this.props
-    this.state._card = card
-    const _card = this.state._card
     return (
       <View style={styles.center}>
-        <Text style={styles.title}>{_card.value.title}</Text>
-        <Text style={styles.subTitle}>{_card.value.questions != undefined ? _card.value.questions.length : 0} cards</Text>
+        <Text style={styles.title}>{card.value.title}</Text>
+        <Text style={styles.subTitle}>{card.value.questions != undefined ? card.value.questions.length : 0} cards</Text>
         <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
           onPress={() => this.props.navigation.navigate('AddCart', { deckId: deckId })}>
           <Text style={{ color: white }}>Add Cart</Text>

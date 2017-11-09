@@ -5,6 +5,7 @@ import { purple, white } from '../utils/colors'
 import uniqueId from 'react-native-unique-id'
 import { addDeck } from '../actions'
 import { NavigationActions } from 'react-navigation'
+ import { newCard } from '../utils/api'
 
 function SubmitBtn({ onPress }) {
     return (
@@ -45,9 +46,11 @@ class NewDeck extends Component {
                 }
             }
 
-            this.props.dispatch(addDeck(kvObj))
+            this.props.dispatch(addDeck(obj))
             this.toHome()
+            newCard(obj)
         })
+
 
     }
     state = { text: 'Name' };

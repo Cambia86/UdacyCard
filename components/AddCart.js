@@ -5,6 +5,7 @@ import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { purple, white } from '../utils/colors'
 import {NewCard} from '../actions'
+// import { addCard } from '../utils/api'
 
 function SubmitBtn({ onPress }) {
     return (
@@ -29,7 +30,9 @@ class AddCart extends Component {
 
             this.props.dispatch(NewCard(obj,this.props.deckId))
             
-            this.props.navigation.goBack()
+            this.props.navigation.navigate('DeckList')
+
+            // addCard(obj)
     }
     state = { question: 'Question', answer:'Answer',obj:{}};
     render() {

@@ -10,20 +10,27 @@ class DeckList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
+    console.log("componentDidMount: "+JSON.stringify( this.props))
     fetchDeckResults()
-      .then((entries) => dispatch(receiveDecks(entries)))
+      .then((entries) => {
+        if(entries.data!==[])
+        console.log("componentDidMount entries: "+JSON.stringify(entries))
+         dispatch(receiveDecks(entries))
+        }
+      )
   }
 
-  _keyExtractor = (item, index) => item.key;
+  _keyExtractor = (item, index) => item.id;
 
   renderFlatListItem(item ) {
-    
+    console.log("renderFlatListItem: "+JSON.stringify(item))
     return (
-      <View key={item.key} style={styles.title}>
+      <View key={item.id} style={styles.title}>
+      
       <TouchableOpacity 
-          onPress={() => this.props.navigation.navigate('DeckView',{deckId:item.key})}>
-        <Text key={"topicCat" + item.value.title} style={{ fontSize: 20,marginTop:10 }}>{item.value.title}</Text>
-        <Text>{item.value.questions !=undefined ? item.value.questions.length :0} cards</Text>
+          onPress={() => this.props.navigation.navigate('DeckView',{deckId:item.id})}>
+        <Text key={"topicCat" + item.title} style={{ fontSize: 20,marginTop:10 }}>{item.title}</Text>
+        <Text>{item.questions !=undefined ? item.questions.length :0} cards</Text>
         </TouchableOpacity>
       </View>
     )
@@ -33,7 +40,8 @@ class DeckList extends Component {
   
   render() {
     const { entries } = this.props
-    if (entries.data === null) {
+    console.log("render: "+JSON.stringify(this.props))
+    if (entries !=null && entries !={}  && entries.data === []) {
       return (
         <View style={styles.container}>
           <Text style={{ textAlign: 'center' }}>{entries.text}</Text>
@@ -100,6 +108,7 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(entries) {
+  console.log("mapStateToProps: "+JSON.stringify(entries))
   return {
     entries
   }

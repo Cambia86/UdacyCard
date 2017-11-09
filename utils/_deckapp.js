@@ -3,9 +3,10 @@
 export const DECKAPP_STORAGE_KEY = 'UdaciDeck:DeckList'
 
 function setDummyData() {
+  console.log("setDummyData: ")
   return (
     {
-      data: null,
+      data: [],
       text: "No deck in app"
     }
   )
@@ -46,7 +47,8 @@ function setDeck(data) {
 }
 
 export function formatDeckResults(results) {
-  return results !== null
+  console.log("formatDeckResults: "+JSON.stringify(results))
+  return results === null
     ? setDummyData()
     : setDeck(JSON.parse(results))
 }
