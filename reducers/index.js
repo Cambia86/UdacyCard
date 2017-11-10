@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS, RECEIVE_DECK, ADD_DECK, NEW_CARD } from '../actions'
+import { RECEIVE_DECKS, RECEIVE_DECK, ADD_DECK, NEW_CARD, ADD_REMINDER } from '../actions'
 import { refactorReduxData } from '../utils/_deckapp'
 
 function entries(state = {}, action) {
@@ -7,7 +7,6 @@ function entries(state = {}, action) {
   switch (action.type) {
 
     case RECEIVE_DECKS:
-      //const decks=action.entries.decks
       const decks = refactorReduxData(action.entries.decks)
       return {
         ...state,
@@ -19,44 +18,15 @@ function entries(state = {}, action) {
         ...action.entries,
       }
     case ADD_DECK:
-      console.log("add deck action:action: " + JSON.stringify(action))
       return {
         ...state,
         decks: [
           ...state.decks,
           action.deck
         ]
-        // data: [
-        //    { [action.deck.key]:action.deck.value}
-        // ]
       }
-    // case NEW_CARD:
-    //   let nestedState = state.data[action.deckId]
-    //   nestedState.value.questions.push(action.card)
-    //   return {
-    //     ...state,
-    //     nestedState
-    //   }
 
     case NEW_CARD:
-      // let newCard = action.card
-      // let res =state.data[action.deckId].value.questions.push(newCard)
-
-      // state.data.map((item) => {
-      //   if (item.key === action.deckId) {
-      //     // Copy the object before mutating
-      //     return Object.assign({}, item, {
-      //       questions:{
-      //         ...action.card
-      //       }
-      //     })
-      //   }
-      //   else{
-      //     let itm=item
-      //   }
-      //   return item
-      // })
-
 
       return {
         ...state,
@@ -73,19 +43,15 @@ function entries(state = {}, action) {
 
         }
       }
-
-    // case 'SOME_ACTION':
-    // return
-    //  state.map((todo, index) => {
-    //   if (index === action.index) {
-    //     // Copy the object before mutating
-    //     return Object.assign({}, todo, {
-    //       completed: true
-    //     })
-    //   }
-    //   return todo
-    // })
-
+    case ADD_REMINDER:
+      let rem=action.reminder
+      return {
+        ...state,
+        todayActivity:{
+          ...state.todayActivity,
+          rem
+        }
+      }
     default:
       return state
   }

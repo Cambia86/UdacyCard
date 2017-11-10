@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform, TextInput ,ScrollView} from 'react-native';
 import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
@@ -39,7 +39,7 @@ class AddCart extends Component {
     render() {
         const { deckId } = this.props
         return (
-            <View style={styles.container}>
+            <View  behavior={'this.state.behavior'} style={styles.container}>
                 <View >
                     <Text style={{ fontSize: 16 }}>Question</Text>
                     <TextInput

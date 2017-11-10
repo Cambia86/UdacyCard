@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform, FlatList } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
-import { receiveDecks } from '../actions'
+import { receiveDecks, addReminder } from '../actions'
 import { purple, white } from '../utils/colors'
+import { timeToString, getDailyReminderValue } from '../utils/helpers'
 
 
 class DeckList extends Component {
@@ -17,8 +18,13 @@ class DeckList extends Component {
           console.log("componentDidMount entries: " + JSON.stringify(entries))
           dispatch(receiveDecks(entries))
         }
-      }
-      )
+        if (!entries[timeToString()]) {
+          dispatch(addReminder({
+            [timeToString()]: getDailyReminderValue()
+          }))
+        }
+      })
+
   }
 
   _keyExtractor = (item, index) => item.id;
@@ -37,14 +43,40 @@ class DeckList extends Component {
     )
   }
 
+  showreminder(reminder) {
+    if (reminder && reminder.rem) {
+      const rem = reminder.rem[timeToString()]
+      if (rem.today)
+        return (
+          <View>
+            {/* <Date Header date={formattedDate} /> */}
+            <Text style={styles.noDataText}>
+              {rem.today}
+            </Text>
+          </View>
+        )
+        else
+        return (
+          <View>
+            {/* <Date Header date={formattedDate} /> */}
+            <Text style={styles.noDataText}>
+              {rem}
+            </Text>
+          </View>
+        )
+    }
+  }
+
 
 
   render() {
-    const { entries } = this.props
+    const { entries, todayActivity } = this.props
     console.log("render: " + JSON.stringify(this.props))
-    if (entries && entries.length ==0 ) {
+    if (entries && entries.length == 0) {
       return (
+
         <View style={styles.container}>
+          {this.showreminder(entries.todayActivity)}
           {/* <Text style={{ textAlign: 'center' }}>{entries.text}</Text> */}
           <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
             <Text style={styles.submitBtnText}>Add Deck</Text>
@@ -55,6 +87,7 @@ class DeckList extends Component {
     else {
       return (
         <View style={styles.center}>
+          {this.showreminder(todayActivity)}
           <FlatList
             data={entries}
             renderItem={({ item }) => this.renderFlatListItem(item)}
@@ -72,7 +105,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#bbb',
     borderBottomWidth: StyleSheet.hairlineWidth
   },
-
+  noDataText: {
+    fontSize: 20,
+    paddingTop: 20,
+    paddingBottom: 20
+  },
   iosSubmitBtn: {
     backgroundColor: purple,
     padding: 10,
@@ -109,15 +146,16 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(entries) {
-  let refArr=[]
+  let refArr = []
   if (entries && entries.decks)
     refArr = Object.keys(entries.decks).map((key) => {
-      return  entries.decks[key]
+      return entries.decks[key]
     })
 
   console.log("mapStateToProps: " + JSON.stringify(entries))
   return {
-    entries:refArr
+    entries: refArr,
+    todayActivity: entries.todayActivity
   }
 }
 export default connect(mapStateToProps)(DeckList)

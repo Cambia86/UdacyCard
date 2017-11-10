@@ -19,41 +19,7 @@ function setDeck(data) {
     decks[item.id]=item
   })
 
-  return data//{decks}
-
-
-  //  {
-    // todo fix read db
-    
-    // data: [
-    //   {
-    //       id:0,
-    //       title: "React",
-    //       questions: [
-    //         {
-    //           question: "What is react?",
-    //           answer: "A library for manage user interface"
-    //         },
-    //         {
-    //           question: "where do you made Ajax Request?",
-    //           answer: "Component Did mount lifecicle event"
-    //         }
-    //       ]
-    
-    //   },
-    //   {
-    //       id:1,
-    //       title: "Javascript",
-    //       questions: [
-    //         {
-    //           question: "What is a closure?",
-    //           answer: "The combinationa  of ..."
-    //         }
-    //       ]
-    //     }
-      
-    // ]
-  // }
+  return data
 }
 
 export function formatDeckResults(results) {

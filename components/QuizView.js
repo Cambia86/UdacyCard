@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { AppRegistry, View, Text, TouchableOpacity, StyleSheet, Platform, Animated } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
-import { receiveDecks } from '../actions'
+import { receiveDecks,addReminder } from '../actions'
 import { purple, white, blue, orange } from '../utils/colors'
 import QuizCard from './QuizCard'
+import { timeToString, getDailyReminderValue } from '../utils/helpers'
 
 class QuizView extends Component {
     state = {
         counter: 1,
-        corrAnsw:0
+        corrAnsw: 0
     }
 
     componentWillMount() {
@@ -48,11 +49,11 @@ class QuizView extends Component {
         this.setState((state) => {
             console.log("corrAnsw: " + state.corrAnsw)
             const c = state.counter + 1
-            const corrAnsw=state.corrAnsw != undefined ? state.corrAnsw  + 1 :1
+            const corrAnsw = state.corrAnsw != undefined ? state.corrAnsw + 1 : 1
             return {
                 ...state,
                 counter: c,
-                corrAnsw:corrAnsw
+                corrAnsw: corrAnsw
             }
         })
     }
@@ -61,11 +62,11 @@ class QuizView extends Component {
         this.setState((state) => {
             console.log("corrAnsw: " + state.corrAnsw)
             const c = state.counter + 1
-            const corrAnsw=state.corrAnsw != undefined ? state.corrAnsw  + 1 :1
+            const corrAnsw = state.corrAnsw != undefined ? state.corrAnsw + 1 : 1
             return {
                 ...state,
                 counter: c,
-                corrAnsw:corrAnsw
+                corrAnsw: corrAnsw
             }
         })
     }
@@ -79,6 +80,14 @@ class QuizView extends Component {
                 counter: c
             }
         })
+    }
+
+    submit = () => {
+        const { dispatch } = this.props
+        let result=this.state.corrAnsw /(this.state.counter-1)*100
+        this.props.dispatch(addReminder({
+            [timeToString()]: "Today score "+ result+"%"
+          }))
     }
 
     render() {
@@ -95,8 +104,8 @@ class QuizView extends Component {
                 { rotateY: this.backInterpolate }
             ]
         }
-        console.log("counter:"+this.state.counter +"qL"+questions.length)
-        if (this.state.counter <=questions.length) {
+        console.log("counter:" + this.state.counter + "qL" + questions.length)
+        if (this.state.counter <= questions.length) {
             return (
                 <View style={styles.container}>
 
@@ -114,10 +123,13 @@ class QuizView extends Component {
                 </View>
             )
         }
-        else{
-            return(
+        else {
+            return (
                 <View style={styles.container}>
-                    <Text>correct answer: {this.state.corrAnsw / questions.length*100}%</Text>
+                    <Text>correct answer: {this.state.corrAnsw / questions.length * 100}%</Text>
+                    <TouchableOpacity onPress={this.submit} res={this.state.corrAnsw / questions.length * 100} style={styles.iosSubmitBtn}>
+                        <Text style={{ color: white }}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
             )
         }
@@ -212,7 +224,7 @@ function mapStateToProps(state, { navigation }) {
         deckId,
         questions: state.decks[deckId].questions,
         counter: state.counter === undefined ? 1 : state.counter,
-        corrAnsw:state.corrAnsw === undefined ? 0 : state.corrAnsw
+        corrAnsw: state.corrAnsw === undefined ? 0 : state.corrAnsw
     }
 }
 
