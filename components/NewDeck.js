@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform, TextInput } from 'react-native';
 import { connect } from 'react-redux'
 import { purple, white } from '../utils/colors'
-import uniqueId from 'react-native-unique-id'
+// import uniqueId from 'react-native-unique-id'
+import UUIDGenerator from 'react-native-uuid-generator';
 import { addDeck } from '../actions'
 import { NavigationActions } from 'react-navigation'
- import { newCard } from '../utils/api'
+ import { submitDeck } from '../utils/api'
 
 function SubmitBtn({ onPress }) {
     return (
@@ -24,34 +25,25 @@ class NewDeck extends Component {
       }
 
     submit = () => {
-        uniqueId((error, id) => {
-            if (error) return console.error(error)
 
+     
             console.log("this.state: "+JSON.stringify(this.state))
 
             console.log("this.state.text: "+JSON.stringify(this.state.text))
 
             const deckList = this.state
             const obj={
-                id: id,
+                id: Date.now(),
                 title: this.state.text,
                 questions: []
             }
-            const kvObj={
-                key:id,
-                value:{
-                    id:id,
-                    title: this.state.text,
-                    questions: []
-                }
-            }
+     
 
+            //
+            
+            submitDeck(obj)
             this.props.dispatch(addDeck(obj))
             this.toHome()
-            newCard(obj)
-        })
-
-
     }
     state = { text: 'Name' };
     render() {

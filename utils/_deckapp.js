@@ -13,37 +13,47 @@ function setDummyData() {
 }
 
 function setDeck(data) {
-  return {
+  var decks={}
+  
+  const lst= data.decks.map((item)=>{
+    decks[item.id]=item
+  })
+
+  return data//{decks}
+
+
+  //  {
     // todo fix read db
-    data: [
-      {
-          id:0,
-          title: "React",
-          questions: [
-            {
-              question: "What is react?",
-              answer: "A library for manage user interface"
-            },
-            {
-              question: "where do you made Ajax Request?",
-              answer: "Component Did mount lifecicle event"
-            }
-          ]
     
-      },
-      {
-          id:1,
-          title: "Javascript",
-          questions: [
-            {
-              question: "What is a closure?",
-              answer: "The combinationa  of ..."
-            }
-          ]
-        }
+    // data: [
+    //   {
+    //       id:0,
+    //       title: "React",
+    //       questions: [
+    //         {
+    //           question: "What is react?",
+    //           answer: "A library for manage user interface"
+    //         },
+    //         {
+    //           question: "where do you made Ajax Request?",
+    //           answer: "Component Did mount lifecicle event"
+    //         }
+    //       ]
+    
+    //   },
+    //   {
+    //       id:1,
+    //       title: "Javascript",
+    //       questions: [
+    //         {
+    //           question: "What is a closure?",
+    //           answer: "The combinationa  of ..."
+    //         }
+    //       ]
+    //     }
       
-    ]
-  }
+    // ]
+  // }
 }
 
 export function formatDeckResults(results) {
@@ -58,4 +68,10 @@ export function formatDeckByIdResults(results) {
     : setDeck(JSON.parse(results))
 }
 
-
+export function refactorReduxData(data){
+  var decks={}
+  const lst= data.map((item)=>{
+    decks[item.id]=item
+  })
+  return decks;
+}

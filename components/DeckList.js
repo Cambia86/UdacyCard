@@ -10,41 +10,42 @@ class DeckList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    console.log("componentDidMount: "+JSON.stringify( this.props))
+    console.log("componentDidMount: " + JSON.stringify(this.props))
     fetchDeckResults()
       .then((entries) => {
-        if(entries.data!==[])
-        console.log("componentDidMount entries: "+JSON.stringify(entries))
-         dispatch(receiveDecks(entries))
+        if (entries.decks) {
+          console.log("componentDidMount entries: " + JSON.stringify(entries))
+          dispatch(receiveDecks(entries))
         }
+      }
       )
   }
 
   _keyExtractor = (item, index) => item.id;
 
-  renderFlatListItem(item ) {
-    console.log("renderFlatListItem: "+JSON.stringify(item))
+  renderFlatListItem(item) {
+    console.log("renderFlatListItem: " + JSON.stringify(item))
     return (
       <View key={item.id} style={styles.title}>
-      
-      <TouchableOpacity 
-          onPress={() => this.props.navigation.navigate('DeckView',{deckId:item.id})}>
-        <Text key={"topicCat" + item.title} style={{ fontSize: 20,marginTop:10 }}>{item.title}</Text>
-        <Text>{item.questions !=undefined ? item.questions.length :0} cards</Text>
+
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('DeckView', { deckId: item.id })}>
+          <Text key={"topicCat" + item.title} style={{ fontSize: 20, marginTop: 10 }}>{item.title}</Text>
+          <Text>{item.questions != undefined ? item.questions.length : 0} cards</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
 
-  
+
   render() {
     const { entries } = this.props
-    console.log("render: "+JSON.stringify(this.props))
-    if (entries !=null && entries !={}  && entries.data === []) {
+    console.log("render: " + JSON.stringify(this.props))
+    if (entries && entries.length ==0 ) {
       return (
         <View style={styles.container}>
-          <Text style={{ textAlign: 'center' }}>{entries.text}</Text>
+          {/* <Text style={{ textAlign: 'center' }}>{entries.text}</Text> */}
           <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
             <Text style={styles.submitBtnText}>Add Deck</Text>
           </TouchableOpacity>
@@ -54,8 +55,8 @@ class DeckList extends Component {
     else {
       return (
         <View style={styles.center}>
-          <FlatList 
-            data={entries.data}
+          <FlatList
+            data={entries}
             renderItem={({ item }) => this.renderFlatListItem(item)}
             keyExtractor={this._keyExtractor}
           />
@@ -65,13 +66,13 @@ class DeckList extends Component {
   }
 }
 const styles = StyleSheet.create({
-  title:{
+  title: {
     alignItems: 'center',
-   flex:1,
-   borderBottomColor: '#bbb',
-   borderBottomWidth: StyleSheet.hairlineWidth
+    flex: 1,
+    borderBottomColor: '#bbb',
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
- 
+
   iosSubmitBtn: {
     backgroundColor: purple,
     padding: 10,
@@ -101,16 +102,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  center:{
+  center: {
     flex: 1,
     alignItems: 'center'
   }
 })
 
 function mapStateToProps(entries) {
-  console.log("mapStateToProps: "+JSON.stringify(entries))
+  let refArr=[]
+  if (entries && entries.decks)
+    refArr = Object.keys(entries.decks).map((key) => {
+      return  entries.decks[key]
+    })
+
+  console.log("mapStateToProps: " + JSON.stringify(entries))
   return {
-    entries
+    entries:refArr
   }
 }
 export default connect(mapStateToProps)(DeckList)

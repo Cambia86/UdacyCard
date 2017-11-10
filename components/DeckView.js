@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { purple, white } from '../utils/colors'
+import {refactorReduxData} from '../utils/_deckapp'
 
 class DeckView extends Component {
 
@@ -22,8 +23,8 @@ class DeckView extends Component {
     const { card, deckId } = this.props
     return (
       <View style={styles.center}>
-        <Text style={styles.title}>{card.value.title}</Text>
-        <Text style={styles.subTitle}>{card.value.questions != undefined ? card.value.questions.length : 0} cards</Text>
+        <Text style={styles.title}>{card.title}</Text>
+        <Text style={styles.subTitle}>{card.questions != undefined ? card.questions.length : 0} cards</Text>
         <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
           onPress={() => this.props.navigation.navigate('AddCart', { deckId: deckId })}>
           <Text style={{ color: white }}>Add Cart</Text>
@@ -82,7 +83,15 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, { navigation }) {
   const { deckId } = navigation.state.params
-  const dekobj = state.data[deckId]
+  
+  // var decks={}
+  // const lst= state.decks.map((item)=>{
+  //   decks[item.id]=item
+  // })
+  //var decks=refactorReduxData(state.decks)
+  var decks=state.decks
+
+  const dekobj = decks[deckId]
   console.log("mapStateToProps dekobj" + JSON.stringify(dekobj))
   return {
     deckId,

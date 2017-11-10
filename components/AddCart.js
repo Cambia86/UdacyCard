@@ -5,7 +5,8 @@ import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { purple, white } from '../utils/colors'
 import {NewCard} from '../actions'
-// import { addCard } from '../utils/api'
+import { addCard } from '../utils/api'
+import {refactorReduxData} from '../utils/_deckapp'
 
 function SubmitBtn({ onPress }) {
     return (
@@ -30,9 +31,9 @@ class AddCart extends Component {
 
             this.props.dispatch(NewCard(obj,this.props.deckId))
             
-            this.props.navigation.navigate('DeckList')
+            this.props.navigation.navigate('DeckView', { deckId: this.props.deckId })
 
-            // addCard(obj)
+             addCard({deckId:this.props.deckId,quest:obj})
     }
     state = { question: 'Question', answer:'Answer',obj:{}};
     render() {
@@ -43,7 +44,7 @@ class AddCart extends Component {
                     <Text style={{ fontSize: 16 }}>Question</Text>
                     <TextInput
                         style={styles.textBox}
-                        onChangeText={(text) => this.setState({ text })}
+                        onChangeText={(question) => this.setState({ question })}
                         value={this.state.question}
                     />
                 </View>
@@ -51,7 +52,7 @@ class AddCart extends Component {
                     <Text style={{ fontSize: 16 }}>Answer</Text>
                     <TextInput
                         style={styles.textBox}
-                        onChangeText={(text) => this.setState({ text })}
+                        onChangeText={(answer) => this.setState({ answer })}
                         value={this.state.answer}
                     />
                 </View>
@@ -84,8 +85,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, { navigation }) {
     const { deckId } = navigation.state.params
-    console.log("ADDCART state param"+JSON.stringify(navigation.state.params))
-    console.log("ADDCART mapstatotoprop - card " + JSON.stringify(state.data[deckId]))
+
     return {
         deckId:deckId
     }

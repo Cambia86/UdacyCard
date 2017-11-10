@@ -4,24 +4,12 @@ export const ADD_DECK = 'ADD_DECK'
 export const NEW_CARD = 'NEW_CARD'
 
 export function receiveDecks(entries) {
-  //   entries.data.forEach( function(item){ 
-  //     var key = Object.keys(item)[0]; //take the first key from every object in the array
-  //     obj[ key ] = item [ key ];  //assign the key and value to output obj
-  //  });
 
-  const _data = entries["data"]
-  var result = Object.keys(_data).map(key => (
-    {
-      key,
-      value: _data[key]
-    }
-  ));
+  const _data = entries.decks
 
   return {
     type: RECEIVE_DECKS,
-    entries:{
-      data:result
-    },
+    entries
   }
 }
 

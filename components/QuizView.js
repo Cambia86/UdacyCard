@@ -210,7 +210,7 @@ function mapStateToProps(state, { navigation }) {
     console.log("QUIZVIEW mapstatetoprops state: " + JSON.stringify(state))
     return {
         deckId,
-        questions: state.data[deckId].value.questions,
+        questions: state.decks[deckId].questions,
         counter: state.counter === undefined ? 1 : state.counter,
         corrAnsw:state.corrAnsw === undefined ? 0 : state.corrAnsw
     }
