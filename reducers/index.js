@@ -18,12 +18,16 @@ function entries(state = {}, action) {
         ...action.entries,
       }
     case ADD_DECK:
+      const deckId=action.deck.id
       return {
         ...state,
-        decks: [
+        decks:{ 
           ...state.decks,
-          action.deck
-        ]
+          [action.deck.id]:{
+            ...state.decks[action.deck.id],
+            ...action.deck
+          }
+        }
       }
 
     case NEW_CARD:

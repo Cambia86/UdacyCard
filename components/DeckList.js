@@ -78,6 +78,7 @@ class DeckList extends Component {
             <Text style={styles.submitBtnText}>Add Deck</Text>
           </TouchableOpacity>
         </View>
+        
       );
     }
     else {
