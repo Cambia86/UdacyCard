@@ -11,11 +11,9 @@ class DeckList extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    console.log("componentDidMount: " + JSON.stringify(this.props))
     fetchDeckResults()
       .then((entries) => {
         if (entries.decks) {
-          console.log("componentDidMount entries: " + JSON.stringify(entries))
           dispatch(receiveDecks(entries))
         }
         if (!entries[timeToString()]) {
@@ -32,9 +30,9 @@ class DeckList extends Component {
   renderFlatListItem(item) {
     console.log("renderFlatListItem: " + JSON.stringify(item))
     return (
-      <View key={item.id} style={styles.title}>
+      <View key={item.id}  style={[styles.itemList,styles.FlatList]}>
 
-        <TouchableOpacity
+        <TouchableOpacity  
           onPress={() => this.props.navigation.navigate('DeckView', { deckId: item.id })}>
           <Text key={"topicCat" + item.title} style={{ fontSize: 20, marginTop: 10 }}>{item.title}</Text>
           <Text>{item.questions != undefined ? item.questions.length : 0} cards</Text>
@@ -48,17 +46,15 @@ class DeckList extends Component {
       const rem = reminder.rem[timeToString()]
       if (rem.today)
         return (
-          <View>
-            {/* <Date Header date={formattedDate} /> */}
+          <View style={styles.reminder}>
             <Text style={styles.noDataText}>
               {rem.today}
             </Text>
           </View>
         )
-        else
+      else
         return (
           <View>
-            {/* <Date Header date={formattedDate} /> */}
             <Text style={styles.noDataText}>
               {rem}
             </Text>
@@ -88,7 +84,8 @@ class DeckList extends Component {
       return (
         <View style={styles.center}>
           {this.showreminder(todayActivity)}
-          <FlatList
+          <FlatList 
+         
             data={entries}
             renderItem={({ item }) => this.renderFlatListItem(item)}
             keyExtractor={this._keyExtractor}
@@ -99,11 +96,47 @@ class DeckList extends Component {
   }
 }
 const styles = StyleSheet.create({
-  title: {
-    alignItems: 'center',
+  
+  container: {
     flex: 1,
-    borderBottomColor: '#bbb',
-    borderBottomWidth: StyleSheet.hairlineWidth
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  FlatList: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+},
+  itemList:{
+    borderRadius: Platform.OS === 'ios' ? 16 : 2,
+    padding: 20,
+    flexDirection: 'row',
+    flex: 1,
+    // marginLeft: 10,
+    // marginRight: 10,
+    marginTop: 10,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
+  },
+  reminder: {
+    borderRadius: Platform.OS === 'ios' ? 16 : 2,
+    padding: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 17,
+    shadowRadius: 3,
+    shadowOpacity: 0.8,
+    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    }
   },
   noDataText: {
     fontSize: 20,
@@ -133,16 +166,8 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 22,
     textAlign: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  center: {
-    flex: 1,
-    alignItems: 'center'
   }
+ 
 })
 
 function mapStateToProps(entries) {

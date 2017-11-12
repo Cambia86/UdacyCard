@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform, TextInput ,ScrollVi
 import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
-import { purple, white } from '../utils/colors'
+import { black, white } from '../utils/colors'
 import {NewCard} from '../actions'
 import { addCard } from '../utils/api'
 import {refactorReduxData} from '../utils/_deckapp'
@@ -65,7 +65,7 @@ class AddCart extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center'
     },
     textBox: {
@@ -73,13 +73,27 @@ const styles = StyleSheet.create({
         height: 40, borderColor: 'gray', borderWidth: 1,width:200
     },
     iosSubmitBtn: {
-        backgroundColor: purple,
+        backgroundColor: black,
         padding: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,
         marginRight: 40,
-        marginTop: 10
+        marginTop: 20,
+        width:200,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    AndroidSubmitBtn: {
+        backgroundColor: black,
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginTop: 20,
+        height: 45,
+        borderRadius: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width:200
     }
 })
 

@@ -3,7 +3,7 @@ import { AppRegistry, View, Text, TouchableOpacity, StyleSheet, Platform, Animat
 import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks } from '../actions'
-import { purple, white, blue, orange } from '../utils/colors'
+import { purple, white, blue, red,green } from '../utils/colors'
 
 
 export default function QuizCard({counter,questLength,question,answer,flipCard,onCorrectAnsw,onWrongAnsw,frontAnimatedStyle,backAnimatedStyle}){
@@ -15,15 +15,16 @@ export default function QuizCard({counter,questLength,question,answer,flipCard,o
                         <View style={styles.title}>
                             <Text style={{ fontSize: 22, }} >{question}</Text>
                             <TouchableOpacity onPress={flipCard} style={styles.answer}>
-                                <Text >Answer</Text>
+                                <Text style={{color:red}}>Answer</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={[styles.bottom, { marginBottom: 10 }]}>
-                            <TouchableOpacity onPress={onCorrectAnsw}  style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
+                            <TouchableOpacity onPress={onCorrectAnsw}  
+                                style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:green}]}>
                                 <Text style={{ color: white }}>Correct</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={onWrongAnsw}   style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
+                            <TouchableOpacity onPress={onWrongAnsw}   style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:red}]}>
                                 <Text style={{ color: white }}>Incorrect</Text>
                             </TouchableOpacity>
                         </View>
@@ -34,10 +35,10 @@ export default function QuizCard({counter,questLength,question,answer,flipCard,o
                         <View style={styles.title}>
                             <Text style={{ fontSize: 22, }} >{answer}</Text>
                             <TouchableOpacity onPress={flipCard} style={styles.answer}>
-                                <Text >Question</Text>
+                                <Text style={{color:red}}>Question</Text>
                             </TouchableOpacity>
                         </View>
-                      
+                       
                     </Animated.View>
         </View>
     )
@@ -110,16 +111,21 @@ const styles = StyleSheet.create({
             height: 45,
             marginLeft: 40,
             marginRight: 40,
-            marginTop: 20
+            marginTop: 20,
+            width:200,
+            justifyContent: 'center',
+            alignItems: 'center',
         },
         AndroidSubmitBtn: {
             backgroundColor: purple,
-            padding: 10,
             paddingLeft: 30,
             paddingRight: 30,
             marginTop: 20,
             height: 45,
             borderRadius: 2,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width:200
         }
     
     })

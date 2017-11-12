@@ -37,10 +37,7 @@ class NewDeck extends Component {
                 title: this.state.text,
                 questions: []
             }
-     
 
-            //
-            
             submitDeck(obj)
             this.props.dispatch(addDeck(obj))
             this.toHome()
@@ -66,9 +63,8 @@ class NewDeck extends Component {
 const styles = StyleSheet.create({
     content: {
         flex: 1,
-
         alignItems: 'center',
-        justifyContent: 'center'
+        marginTop:10
     },
     textBox: {
         flexDirection: 'row',
