@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks, addReminder } from '../actions'
 import { purple, white } from '../utils/colors'
-import { timeToString, getDailyReminderValue } from '../utils/helpers'
-
+import { timeToString, getDailyReminderValue,clearLocalNotification,  setLocalNotification } from '../utils/helpers'
 
 class DeckList extends Component {
 
@@ -44,7 +43,8 @@ class DeckList extends Component {
   showreminder(reminder) {
     if (reminder && reminder.rem) {
       const rem = reminder.rem[timeToString()]
-      if (rem.today)
+      if (rem.today){
+        setLocalNotification()
         return (
           <View style={styles.reminder}>
             <Text style={styles.noDataText}>
@@ -52,7 +52,10 @@ class DeckList extends Component {
             </Text>
           </View>
         )
-      else
+      }
+      else{
+        clearLocalNotification()
+        .then(setLocalNotification)
         return (
           <View>
             <Text style={styles.noDataText}>
@@ -60,6 +63,7 @@ class DeckList extends Component {
             </Text>
           </View>
         )
+      }
     }
   }
 
