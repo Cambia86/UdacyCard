@@ -17,7 +17,7 @@ function SubmitBtn({ onPress }) {
 }
 
 class NewDeck extends Component {
-
+    state = { text: 'Name' };
 
     toHome = () => {
         console.log("toHOMe")
@@ -42,7 +42,7 @@ class NewDeck extends Component {
             this.props.dispatch(addDeck(obj))
             this.toHome()
     }
-    state = { text: 'Name' };
+   
     render() {
         return (
             <View style={styles.content}>
