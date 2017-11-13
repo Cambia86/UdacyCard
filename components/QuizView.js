@@ -14,14 +14,12 @@ class QuizView extends Component {
     }
     componentWillUnmount() {
 
-        console.log("componentWillUnmount:"+JSON.stringify( this.value))
         this.value = 0;
         this.animatedValue.removeListener(({ value }) => {
             this.value = value;
         })
       }
     componentWillMount() {
-        console.log("component will mount")
         this.animatedValue = new Animated.Value(0);
         this.value = 0;
         this.animatedValue.addListener(({ value }) => {
@@ -54,7 +52,6 @@ class QuizView extends Component {
 
     nextQuestion() {
         this.setState((state) => {
-            console.log("corrAnsw: " + state.corrAnsw)
             const c = state.counter + 1
             const corrAnsw = state.corrAnsw != undefined ? state.corrAnsw + 1 : 1
             return {
@@ -67,7 +64,6 @@ class QuizView extends Component {
 
     correctAnsw() {
         this.setState((state) => {
-            console.log("corrAnsw: " + state.corrAnsw)
             const c = state.counter + 1
             const corrAnsw = state.corrAnsw != undefined ? state.corrAnsw + 1 : 1
             return {
@@ -80,7 +76,6 @@ class QuizView extends Component {
 
     wrongAnsw() {
         this.setState((state) => {
-            console.log("corrAnsw: " + state.corrAnsw)
             const c = state.counter + 1
             return {
                 ...state,
@@ -100,7 +95,6 @@ class QuizView extends Component {
     render() {
         const { questions } = this.props
         const counter = this.state.counter
-        console.log("passo da render: " + this.state.counter)
         const frontAnimatedStyle = {
             transform: [
                 { rotateY: this.frontInterpolate }
@@ -111,7 +105,6 @@ class QuizView extends Component {
                 { rotateY: this.backInterpolate }
             ]
         }
-        console.log("counter:" + this.state.counter + "qL" + questions.length)
         if (this.state.counter <= questions.length) {
             return (
                 <View style={styles.container}>
@@ -225,8 +218,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state, { navigation }) {
     const { deckId } = navigation.state.params
-    console.log("QUIZVIEW mapstatetoprops deckId: " + deckId)
-    console.log("QUIZVIEW mapstatetoprops state: " + JSON.stringify(state))
     return {
         deckId,
         questions: state.decks[deckId].questions,
