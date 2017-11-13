@@ -12,7 +12,14 @@ class QuizView extends Component {
         counter: 1,
         corrAnsw: 0
     }
+    componentWillUnmount() {
 
+        console.log("componentWillUnmount:"+JSON.stringify( this.value))
+        this.value = 0;
+        this.animatedValue.removeListener(({ value }) => {
+            this.value = value;
+        })
+      }
     componentWillMount() {
         console.log("component will mount")
         this.animatedValue = new Animated.Value(0);
