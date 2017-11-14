@@ -13,13 +13,7 @@ function setDummyData() {
 }
 
 function setDeck(data) {
-  var decks={}
-  
-  const lst= data.decks.map((item)=>{
-    decks[item.id]=item
-  })
-
-  return data
+  return {decks:[]}
 }
 
 export function formatDeckResults(results) {

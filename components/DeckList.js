@@ -90,7 +90,7 @@ class DeckList extends Component {
         <View style={styles.center}>
           {this.showreminder(todayActivity)}
           <FlatList 
-         
+            style={{paddingBottom:20}}
             data={entries}
             renderItem={({ item }) => this.renderFlatListItem(item)}
             keyExtractor={this._keyExtractor}

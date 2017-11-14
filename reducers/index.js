@@ -24,7 +24,6 @@ function entries(state = {}, action) {
         decks:{ 
           ...state.decks,
           [action.deck.id]:{
-            ...state.decks[action.deck.id],
             ...action.deck
           }
         }
