@@ -90,6 +90,18 @@ class QuizView extends Component {
         this.props.dispatch(addReminder({
             [timeToString()]: "Today score "+ result+"%"
           }))
+
+          this.props.navigation.navigate('DeckView', { deckId:this.props.deckId })
+    }
+
+    restart =()=>{
+        this.setState((state) => {
+            return {
+                ...state,
+                counter: 1,
+                corrAnsw:0
+            }
+        })
     }
 
     render() {
@@ -127,8 +139,11 @@ class QuizView extends Component {
             return (
                 <View style={styles.container}>
                     <Text>correct answer: {this.state.corrAnsw / questions.length * 100}%</Text>
-                    <TouchableOpacity onPress={this.submit} res={this.state.corrAnsw / questions.length * 100} style={styles.iosSubmitBtn}>
-                        <Text style={{ color: white }}>Submit</Text>
+                    <TouchableOpacity onPress={this.submit} res={this.state.corrAnsw / questions.length * 100} style={[styles.iosSubmitBtn,{width:200,alignItems: "center",justifyContent: "center" }]}>
+                        <Text style={{ color: white ,alignItems: "center",justifyContent: "center"}}>Submit & back</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.restart}  style={[styles.iosSubmitBtn,{width:200,alignItems: "center",justifyContent: "center" }]}>
+                        <Text style={{ color: white,alignItems: "center",justifyContent: "center" }}>Restart</Text>
                     </TouchableOpacity>
                 </View>
             )
