@@ -7,17 +7,6 @@ import { purple, white ,black} from '../utils/colors'
 import {refactorReduxData} from '../utils/_deckapp'
 
 class DeckView extends Component {
-
-  // componentWillReceiveProps(nextProps) {
-
-  //   if (nextProps.card != this.props.card)
-  //     this.setState({ _card: this.props.card })
-  // }
-
-  // shouldComponentUpdate(nextProps) {
-  //   return nextProps.card != this.props.card;
-  // }
-
   
   render() {
     const { card, deckId } = this.props
@@ -26,7 +15,7 @@ class DeckView extends Component {
         <Text style={styles.title}>{card.title}</Text>
         <Text style={styles.subTitle}>{card.questions != undefined ? card.questions.length : 0} cards</Text>
         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:white}]}
-          onPress={() => this.props.navigation.navigate('AddCart', { deckId: deckId })}>
+          onPress={() => this.props.navigation.navigate('AddCard', { deckId: deckId })}>
           <Text style={{ color: black }}>Add Cart</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:black}]}
@@ -38,6 +27,25 @@ class DeckView extends Component {
 
   }
 }
+// const DeckView = ({props}) => {
+  
+//     const { card, deckId } = props
+//     return (
+//       <View style={styles.center}>
+//         <Text style={styles.title}>{card.title}</Text>
+//         <Text style={styles.subTitle}>{card.questions != undefined ? card.questions.length : 0} cards</Text>
+//         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:white}]}
+//           onPress={() => this.props.navigation.navigate('AddCard', { deckId: deckId })}>
+//           <Text style={{ color: black }}>Add Cart</Text>
+//         </TouchableOpacity>
+//         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:black}]}
+//           onPress={() => this.props.navigation.navigate('QuizView', { deckId: deckId })}>
+//           <Text style={{ color: white }}>Start Quiz</Text>
+//         </TouchableOpacity>
+//       </View>
+//     );
+
+// }
 const styles = StyleSheet.create({
   title: {
     fontSize: 20

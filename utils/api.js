@@ -44,9 +44,9 @@ export function addCard(obj) {
         })
         AsyncStorage.setItem(DECKAPP_STORAGE_KEY, JSON.stringify(data))
       }
-      // AsyncStorage.getItem(DECKAPP_STORAGE_KEY)
-      //   .then((result) => {
-      //   })
+      AsyncStorage.getItem(DECKAPP_STORAGE_KEY)
+        .then((result) => {
+        })
     }
     )
 

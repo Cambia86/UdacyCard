@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDeckResults } from '../utils/api'
 import { receiveDecks, addReminder } from '../actions'
 import { purple, white } from '../utils/colors'
-import { timeToString, getDailyReminderValue,clearLocalNotification,  setLocalNotification } from '../utils/helpers'
+import { timeToString, getDailyReminderValue, clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class DeckList extends Component {
 
@@ -29,9 +29,9 @@ class DeckList extends Component {
   renderFlatListItem(item) {
     console.log("renderFlatListItem: " + JSON.stringify(item))
     return (
-      <View key={item.id}  style={[styles.itemList,styles.FlatList]}>
+      <View key={item.id} style={[styles.itemList, styles.FlatList]}>
 
-        <TouchableOpacity  
+        <TouchableOpacity
           onPress={() => this.props.navigation.navigate('DeckView', { deckId: item.id })}>
           <Text key={"topicCat" + item.title} style={{ fontSize: 20, marginTop: 10 }}>{item.title}</Text>
           <Text>{item.questions != undefined ? item.questions.length : 0} cards</Text>
@@ -43,7 +43,7 @@ class DeckList extends Component {
   showreminder(reminder) {
     if (reminder && reminder.rem) {
       const rem = reminder.rem[timeToString()]
-      if (rem.today){
+      if (rem.today) {
         setLocalNotification()
         return (
           <View style={styles.reminder}>
@@ -53,9 +53,9 @@ class DeckList extends Component {
           </View>
         )
       }
-      else{
+      else {
         clearLocalNotification()
-        .then(setLocalNotification)
+          .then(setLocalNotification)
         return (
           <View>
             <Text style={styles.noDataText}>
@@ -74,23 +74,21 @@ class DeckList extends Component {
     console.log("render: " + JSON.stringify(this.props))
     if (entries && entries.length == 0) {
       return (
-
         <View style={styles.container}>
           {this.showreminder(entries.todayActivity)}
-          {/* <Text style={{ textAlign: 'center' }}>{entries.text}</Text> */}
           <TouchableOpacity style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}>
             <Text style={styles.submitBtnText}>Add Deck</Text>
           </TouchableOpacity>
         </View>
-        
+
       );
     }
     else {
       return (
         <View style={styles.center}>
           {this.showreminder(todayActivity)}
-          <FlatList 
-            style={{paddingBottom:20}}
+          <FlatList
+            style={{ paddingBottom: 20 }}
             data={entries}
             renderItem={({ item }) => this.renderFlatListItem(item)}
             keyExtractor={this._keyExtractor}
@@ -101,7 +99,7 @@ class DeckList extends Component {
   }
 }
 const styles = StyleSheet.create({
-  
+
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -112,8 +110,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
-},
-  itemList:{
+  },
+  itemList: {
     borderRadius: Platform.OS === 'ios' ? 16 : 2,
     padding: 20,
     flexDirection: 'row',
@@ -172,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
   }
- 
+
 })
 
 function mapStateToProps(entries) {
@@ -182,7 +180,6 @@ function mapStateToProps(entries) {
       return entries.decks[key]
     })
 
-  console.log("mapStateToProps: " + JSON.stringify(entries))
   return {
     entries: refArr,
     todayActivity: entries.todayActivity

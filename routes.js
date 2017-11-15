@@ -3,7 +3,7 @@ import React from 'react';
 import DeckList from './components/DeckList'
 import DeckView from './components/DeckView'
 import QuizView from './components/QuizView'
-import AddCart from './components/AddCart'
+import AddCard from './components/AddCard'
 import NewDeck from './components/NewDeck'
 import { purple, white } from './utils/colors'
 import { Platform, StatusBar, StyleSheet, Text } from 'react-native'
@@ -69,8 +69,8 @@ export const Tabs = TabNavigator({
             }
           }
         },
-        AddCart: {
-          screen: AddCart,
+        AddCard: {
+          screen: AddCard,
           navigationOptions: {
             title: 'New Cart',
             headerTintColor: white,

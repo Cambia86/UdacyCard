@@ -13,11 +13,14 @@ function setDummyData() {
 }
 
 function setDeck(data) {
-  return {decks:[]}
+  if (data && data.decks)
+    return { decks:data.decks }
+  else
+    return { decks: [] }
 }
 
 export function formatDeckResults(results) {
-  console.log("formatDeckResults: "+JSON.stringify(results))
+  console.log("formatDeckResults: " + JSON.stringify(results))
   return results === null
     ? setDummyData()
     : setDeck(JSON.parse(results))
@@ -28,10 +31,10 @@ export function formatDeckByIdResults(results) {
     : setDeck(JSON.parse(results))
 }
 
-export function refactorReduxData(data){
-  var decks={}
-  const lst= data.map((item)=>{
-    decks[item.id]=item
+export function refactorReduxData(data) {
+  var decks = {}
+  const lst = data.map((item) => {
+    decks[item.id] = item
   })
   return decks;
 }

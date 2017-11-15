@@ -3,25 +3,25 @@ import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
 const NOTIFICATION_KEY = 'UdaciCard:notifications'
 
-export function timeToString (time = Date.now()) {
-    const date = new Date(time)
-    const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-    return todayUTC.toISOString().split('T')[0]
+export function timeToString(time = Date.now()) {
+  const date = new Date(time)
+  const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  return todayUTC.toISOString().split('T')[0]
+}
+
+export function getDailyReminderValue() {
+  return {
+    today: "👋 Don't forget to study today!"
   }
-
-  export function getDailyReminderValue () {
-    return {
-      today: "👋 Don't forget to study today!"
-    }
-  }
+}
 
 
-export function clearLocalNotification () {
+export function clearLocalNotification() {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-function createNotification () {
+function createNotification() {
   return {
     title: 'Remember to study!',
     body: "👋 don't forget to study today!",
@@ -37,32 +37,50 @@ function createNotification () {
   }
 }
 
-export function setLocalNotification () {
+export function setLocalNotification() {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
-    .then((data) => {
+    .then(data => {
       if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS)
-          .then(({ status }) => {
-            if (status === 'granted') {
-              Notifications.cancelAllScheduledNotificationsAsync()
+        return Permissions.askAsync(Permissions.NOTIFICATIONS)
+      }
+      else
+        return status = 'granted'
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .then(({ status }) => {
+      if (status && status === 'granted') {
+        Notifications.cancelAllScheduledNotificationsAsync()
 
-              let tomorrow = new Date()
-              tomorrow.setDate(tomorrow.getDate() + 1)
-              tomorrow.setHours(20)
-              tomorrow.setMinutes(0)
+        let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        tomorrow.setHours(20)
+        tomorrow.setMinutes(0)
 
-              Notifications.scheduleLocalNotificationAsync(
-                createNotification(),
-                {
-                  time: tomorrow,
-                  repeat: 'day',
-                }
-              )
+        Notifications.scheduleLocalNotificationAsync(createNotification(), {
+          time: tomorrow,
+          repeat: 'day',
+        })
 
-              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
-            }
-          })
+        AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+      }
+      else{
+        let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        tomorrow.setHours(20)
+        tomorrow.setMinutes(0)
+
+        Notifications.scheduleLocalNotificationAsync(createNotification(), {
+          time: tomorrow,
+          repeat: 'day',
+        })
+
+        AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
       }
     })
+    .catch((error) => {
+      console.error(error);
+    });
 }
