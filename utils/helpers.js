@@ -9,11 +9,9 @@ export function timeToString(time = Date.now()) {
   return todayUTC.toISOString().split('T')[0]
 }
 
-export function getDailyReminderValue() {
-  return {
+export const  getDailyReminderValue=()=>( {
     today: "👋 Don't forget to study today!"
-  }
-}
+})
 
 
 export function clearLocalNotification() {

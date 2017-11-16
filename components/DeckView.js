@@ -27,25 +27,7 @@ class DeckView extends Component {
 
   }
 }
-// const DeckView = ({props}) => {
-  
-//     const { card, deckId } = props
-//     return (
-//       <View style={styles.center}>
-//         <Text style={styles.title}>{card.title}</Text>
-//         <Text style={styles.subTitle}>{card.questions != undefined ? card.questions.length : 0} cards</Text>
-//         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:white}]}
-//           onPress={() => this.props.navigation.navigate('AddCard', { deckId: deckId })}>
-//           <Text style={{ color: black }}>Add Cart</Text>
-//         </TouchableOpacity>
-//         <TouchableOpacity style={[Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn,{backgroundColor:black}]}
-//           onPress={() => this.props.navigation.navigate('QuizView', { deckId: deckId })}>
-//           <Text style={{ color: white }}>Start Quiz</Text>
-//         </TouchableOpacity>
-//       </View>
-//     );
 
-// }
 const styles = StyleSheet.create({
   title: {
     fontSize: 20

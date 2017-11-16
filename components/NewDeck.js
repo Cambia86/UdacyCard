@@ -21,15 +21,16 @@ class NewDeck extends Component {
 
     toHome = () => {
         console.log("toHOMe")
-        this.props.navigation.navigate('DeckList')
+        this.props.nav.goBack()
+      }
+
+      toDeck = (item) => {
+        console.log("toHOMe")
+        this.props.navigation.navigate('DeckView', { deckId: item.id })
       }
 
     submit = () => {
 
-     
-            console.log("this.state: "+JSON.stringify(this.state))
-
-            console.log("this.state.text: "+JSON.stringify(this.state.text))
 
             const deckList = this.state
             const obj={
@@ -40,7 +41,7 @@ class NewDeck extends Component {
 
             submitDeck(obj)
             this.props.dispatch(addDeck(obj))
-            this.toHome()
+            this.toDeck(obj)
     }
    
     render() {
@@ -81,11 +82,13 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps(state) {
+const mapStateToProps = state => ({ state })
 
-    return {
-        state
-    }
-}
+// function mapStateToProps(state) {
+
+//     return {
+//         state
+//     }
+// }
 
 export default connect(mapStateToProps)(NewDeck)

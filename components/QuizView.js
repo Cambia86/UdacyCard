@@ -90,8 +90,7 @@ class QuizView extends Component {
         this.props.dispatch(addReminder({
             [timeToString()]: "Today score "+ result+"%"
           }))
-
-          this.props.navigation.navigate('DeckView', { deckId:this.props.deckId })
+          this.props.navigation.goBack()
     }
 
     restart =()=>{
